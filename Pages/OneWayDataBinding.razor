@@ -1,0 +1,40 @@
+﻿@page "/OneWayDataBinding"
+<h3>OneWayDataBinding</h3>
+
+<!-- Use this button to trigger changes in the source values -->
+<button @onclick="IncrementCount">Increase Count</button>
+
+<p>Counter: @Count</p>
+
+@if (IsWarning)
+{
+    <p style="background-color: red; padding: 5px; color: white">This is a Warning!</p>
+}
+else
+{
+    <p style="background-color: @Background; color: white; padding: 5px">This is a Message</p>
+
+}
+
+
+<ul>
+    @foreach (var number in Numbers)
+    {
+        <li>@number</li>
+    }
+</ul>
+
+@functions {
+    private int Count { get; set; } = 1;
+    private bool IsWarning { get; set; } = true;
+    private string Background { get; set; } = "red";
+    private List<int> Numbers { get; set; } = new List<int> { 1, 2, 3, 4, 5 };
+
+    private void IncrementCount()
+    {
+        Count++;
+        IsWarning = !IsWarning;
+        Background = Background == "red" ? "blue" : "red";
+        Numbers.Add(Numbers.Max() + 1);
+    }
+}

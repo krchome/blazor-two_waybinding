@@ -1,0 +1,45 @@
+﻿@page "/AdvancedTwoWayDataBinding"
+<h3>AdvancedTwoWayDataBinding</h3>
+
+<p>
+    @*Enter your name: <input type="text" @bind-value="@Name" @bind-value:event="oninput" /><br />
+        Enter your age? <input type="text" @bind-value="@Age" @bind-value:event="oninput" /><br />
+        Enter your salary? <input type="text" @bind-value="@Salary" @bind-value:event="oninput"/><br />*@
+
+    Enter your name: <input type="text" @bind="@Name"/><br />
+    Enter your age? <input type="text" @bind="@Age"/><br />
+    Enter your salary? <input type="text" @bind="@Salary"/><br />
+
+
+    Are you a manager? <input type="checkbox" @bind="@IsManager" /><br />
+
+    <select id="select-box" @bind="@TypeOfEmployee">
+        <option value=@EmployeeType.Employee>@EmployeeType.Employee.ToString()</option>
+        <option value=@EmployeeType.Contractor>@EmployeeType.Contractor.ToString()</option>
+        <option value=@EmployeeType.Intern>@EmployeeType.Intern.ToString()</option>
+    </select>
+</p>
+
+<h2>Hello, @Name!</h2>
+
+<p>You are @Age years old. You are getting $@Salary as Salary. </p>
+
+@if (IsManager && (@TypeOfEmployee == @EmployeeType.Employee))
+{
+    <p>You are a manager!</p>
+}
+else
+{
+    <p>You are a @TypeOfEmployee </p>
+}
+
+
+@functions {
+    private enum EmployeeType { Employee, Contractor, Intern };
+    private EmployeeType TypeOfEmployee { get; set; } = EmployeeType.Employee;
+
+    private string Name { get; set; }
+    private bool IsManager { get; set; } = false;
+    private static int Age { get; set; }
+    public decimal Salary { get; set; }
+}

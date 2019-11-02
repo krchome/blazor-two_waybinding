@@ -1,0 +1,45 @@
+﻿@page "/TwoWayDataBinding"
+<h3>TwoWayDataBinding</h3>
+
+<h1>@Title</h1>
+
+@*<input @bind="@Title" />*@
+@*<input @bind-value="Title" @bind-value:event="oninput" />
+
+    @code {
+        private string Title { get; set; } = "Hello, World!";
+    }*@
+
+<h1>@Title</h1>
+<ChildComponent @bind-ParentsTitle="Title" />
+
+
+<button @onclick="UpdateTitle">Update Title</button>
+
+@code {
+    private string Title { get; set; } = "Hello, World!";
+
+    private void UpdateTitle()
+    {
+        Title = "Hello, Blazor!";
+    }
+}
+
+<h2>Parent Title is: @ParentsTitle</h2>
+<button @onclick="UpdateParentsTitle">Update Parents Title</button>
+
+
+@code {
+
+    [Parameter] public string ParentsTitle { get; set; }
+    [Parameter] public EventCallback<string> ParentsTitleChanged { get; set; }
+
+    private async Task UpdateParentsTitle()
+    {
+        ParentsTitle = "Hello, From Child Component!";
+        await ParentsTitleChanged.InvokeAsync(ParentsTitle);
+    }
+}
+
+
+
