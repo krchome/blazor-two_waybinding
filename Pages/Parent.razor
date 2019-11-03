@@ -1,17 +1,21 @@
 ﻿@page "/Parent"
-<h3>Parent</h3>
+<h3> Parent Component</h3>
+<p>String in Parent: @parentString</p>
+<button @onclick="@PassToChild">Pass String To Child</button>
 
-<h1>@Title</h1>
+<Child ToChild=@parentString
+                FromChild=ReceivedFromChild>
+</Child>
 
-<ChildComponent @bind-ParentsTitle-ParentsTitleChanged="Title" />
-
-<button @onclick="UpdateTitle">Update Title</button>
-
-@code {
-    private string Title { get; set; } = "Hello, World!";
-
-    private void UpdateTitle()
+@code{
+    private string parentString = "Initial Parent String";
+    private void PassToChild()
     {
-        Title = "Hello, Blazor!";
+        parentString += "- To Child";
+    }
+    private void ReceivedFromChild(string str)
+    {
+        parentString = str;
+        StateHasChanged();
     }
 }

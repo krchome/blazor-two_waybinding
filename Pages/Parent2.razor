@@ -1,0 +1,15 @@
+﻿@page "/Parent2"
+<h3> Parent Component</h3>
+<p>Logging Event triggered from Child: @logString</p>
+
+<Child2 EventFromChild=@TriggerFromChild>
+</Child2>
+
+@functions{
+    private string logString = "";
+    private void TriggerFromChild()
+    {
+        logString = "Triggered From Child using Action and Invoke";
+        StateHasChanged();
+    }
+}

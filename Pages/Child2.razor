@@ -1,0 +1,12 @@
+﻿<h4>Child Component</h4>
+<button @onclick="@Trigger">Trigger Parent</button>
+
+@functions{
+    [Parameter]
+    public Action EventFromChild { get; set; }
+
+    private void Trigger()
+    {
+        EventFromChild?.Invoke();
+    }
+}

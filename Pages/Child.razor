@@ -1,18 +1,18 @@
-﻿<h3>Child</h3>
+﻿<h4>Child Component</h4>
+<button @onclick="@PassToParent">Pass String to Parent</button>
+<p>String received from Parent : @ToChild</p>
 
-<h2>Parent Title is: @ParentsTitle</h2>
+@code{
+    [Parameter]
+    public string ToChild { get; set; }
+    [Parameter]
+    public Action<string> FromChild { get; set; }
 
-<button @onclick="UpdateParentsTitle">Update Parents Title</button>
+    private string childString;
 
-
-@code {
-
-    [Parameter] public string ParentsTitle { get; set; }
-    [Parameter] public EventCallback<string> ParentsTitleChanged { get; set; }
-
-    private async Task UpdateParentsTitle()
+    private void PassToParent()
     {
-        ParentsTitle = "Hello, From Child Component!";
-        await ParentsTitleChanged.InvokeAsync(ParentsTitle);
+        childString = ToChild + "- To Parent";
+        FromChild(childString);
     }
 }
